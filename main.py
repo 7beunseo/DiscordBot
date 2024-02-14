@@ -18,6 +18,7 @@ user_voice_times = {}
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
+    await client.change_presence(status=discord.Status.online, activity=discord.Game("밤새 코딩"))
 
 @client.event
 async def on_voice_state_update(member, before, after):
