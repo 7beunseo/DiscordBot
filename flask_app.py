@@ -1,13 +1,14 @@
-import discord, asyncio
+import discord
+import asyncio
 import time
-from config import CHANEL_ID, TOKEN
+from config import CHANNEL_ID, TOKEN
+from keep_alive import keep_alive
 
 intents = discord.Intents.default()
 intents.presences = True
 intents.members = True
 
 client = discord.Client(intents=intents)
-
 
 # 음성 채널 입장 시간 저장할 딕셔너리
 join_times = {}
@@ -18,7 +19,8 @@ user_voice_times = {}
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
-    await client.change_presence(status=discord.Status.online, activity=discord.Game("밤새 코딩"))
+    await client.change_presence(status=discord.Status.online,
+                                 activity=discord.Game("밤새 코딩"))
 
 @client.event
 async def on_voice_state_update(member, before, after):
@@ -36,13 +38,15 @@ async def on_voice_state_update(member, before, after):
                 user_voice_times[member.id] += duration
             else:
                 user_voice_times[member.id] = duration
-            channel = client.get_channel(CHANEL_ID)
+            channel = client.get_channel(1206787073558847536)
 
             hours = int(duration // 3600)
             minutes = int((duration % 3600) // 60)
             seconds = int(duration % 60)
             if channel is not None:
-                await channel.send(f'{member.mention}님이 음성 채팅에서 {hours}시간 {minutes}분 {seconds}초를 보냈습니다.')
+                await channel.send(
+                    f'{member.mention}님이 음성 채팅에서 {hours}시간 {minutes}분 {seconds}초를 보냈습니다.'
+                )
                 await print_voice_statistics(channel)
 
 async def print_voice_statistics(channel):
@@ -55,5 +59,5 @@ async def print_voice_statistics(channel):
         voice_statistics += f"<@{user_id}>: {hours}시간 {minutes}분 {seconds}초\n"
     await channel.send(voice_statistics)
 
-client.run(TOKEN)
-
+keep_alive()
+client.run("MTIwNzIzNzQ1MjY0MTg2NTcyOA.Gobi8C.2pUIIy0olCaYgLJV9_udELxyipTRVj8b_VWvZ8")
