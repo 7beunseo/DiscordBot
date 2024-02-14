@@ -38,7 +38,7 @@ async def on_voice_state_update(member, before, after):
                 user_voice_times[member.id] += duration
             else:
                 user_voice_times[member.id] = duration
-            channel = client.get_channel(1206787073558847536)
+            channel = client.get_channel(CHANNEL_ID)
 
             hours = int(duration // 3600)
             minutes = int((duration % 3600) // 60)
@@ -60,4 +60,4 @@ async def print_voice_statistics(channel):
     await channel.send(voice_statistics)
 
 keep_alive()
-client.run("MTIwNzIzNzQ1MjY0MTg2NTcyOA.Gobi8C.2pUIIy0olCaYgLJV9_udELxyipTRVj8b_VWvZ8")
+client.run(TOKEN)
